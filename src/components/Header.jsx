@@ -2,33 +2,43 @@ import React, { useState, useEffect, useCallback } from "react";
 import style from "./header.module.css";
 
 const Header = () => {
+    // State to manage whether the checkbox is checked or not
+    // Initially set based on the window width
     const [checkboxChecked, setCheckboxChecked] = useState(window.innerWidth > 500);
+    
+    // State to manage the display style of the menu
+    // Initially set based on the window width
     const [menuDisplay, setMenuDisplay] = useState(window.innerWidth > 500 ? "flex" : "none");
 
+    // Handle window resize to update states based on window width
     const handleResize = useCallback(() => {
         if (window.innerWidth <= 500) {
-            setCheckboxChecked(false);
-            setMenuDisplay("none");
+            setCheckboxChecked(false);// Uncheck checkbox if width is 500px or less
+            setMenuDisplay("none");// Hide menu if width is 500px or less
         } else {
-            setCheckboxChecked(true);
-            setMenuDisplay("flex");
+            setCheckboxChecked(true);// Check checkbox if width is more than 500px
+            setMenuDisplay("flex");// Show menu if width is more than 500px
         }
     }, []);
 
+    // Effect to add and remove resize event listener with debounce
     useEffect(() => {
         const debouncedHandleResize = debounce(handleResize, 250);
         window.addEventListener("resize", debouncedHandleResize);
 
+        // Initial check on component mount
         handleResize();
 
+        // Cleanup event listener on component unmount
         return () => {
             window.removeEventListener("resize", debouncedHandleResize);
         };
     }, [handleResize]);
 
+    // Handle checkbox change event
     const checkboxChange = (e) => {
-        setCheckboxChecked(e.target.checked);
-        setMenuDisplay(e.target.checked ? "flex" : "none");
+        setCheckboxChecked(e.target.checked); // Update checkbox state
+        setMenuDisplay(e.target.checked ? "flex" : "none"); // Update menu display based on checkbox state
     };
 
     return (
@@ -70,6 +80,7 @@ const Header = () => {
     );
 };
 
+// Debounce function to limit the rate at which a function can fire
 const debounce = (func, delay) => {
     let timeoutId;
     return function debounced(...args) {
