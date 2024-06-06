@@ -5,6 +5,7 @@
     align-items: center;
     padding: 10px;
     background-color: black;
+    height: 7.23dvh;
 
     .websiteLogo{
         font-weight: 500;

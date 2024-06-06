@@ -1,5 +1,6 @@
 import Header from "./components/Header.jsx";
 import HomePageMain from "./components/HomePageMain.jsx";
+import FooterCard from "./components/FooterCard.jsx";
 
 function App() {
   
@@ -7,6 +8,7 @@ function App() {
     <>
       <Header/>
       <HomePageMain/>
+      <FooterCard/>
     </>
   )
 }
