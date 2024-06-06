@@ -3,16 +3,24 @@ import style from "./header.module.css";
 
 const Header = () => {
     const [checkboxChecked, setCheckboxChecked] = useState(window.innerWidth > 500);
-    const [menuDisplay, setMenuDisplay] = useState(checkboxChecked ? "flex" : "none");
+    const [menuDisplay, setMenuDisplay] = useState(window.innerWidth > 500 ? "flex" : "none");
 
     const handleResize = useCallback(() => {
-        setMenuDisplay(window.innerWidth <= 500 ? (checkboxChecked ? "flex" : "none") : "flex");
-    }, [checkboxChecked]);
+        if (window.innerWidth <= 500) {
+            setCheckboxChecked(false);
+            setMenuDisplay("none");
+        } else {
+            setCheckboxChecked(true);
+            setMenuDisplay("flex");
+        }
+    }, []);
 
     useEffect(() => {
         const debouncedHandleResize = debounce(handleResize, 250);
         window.addEventListener("resize", debouncedHandleResize);
-        
+
+        handleResize();
+
         return () => {
             window.removeEventListener("resize", debouncedHandleResize);
         };
